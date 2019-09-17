@@ -2,7 +2,7 @@
   "author": "iarigby",
   "name": "spotify-auth-node",
   "description": "simple backend for authorizing and refreshing with spotify",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "querystring": "~0.2.0",
     "request": "~2.83.0"
