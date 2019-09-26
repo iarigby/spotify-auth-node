@@ -77,9 +77,9 @@ exports.callback = function (req, res) {
 
 exports.accessToken = function (req, res) {
     controller.getAccessToken()
-        .then(data => {
+        .then(token => {
             res.send({
-                'access_token': data.access_token
+                'access_token': token
             })
         })
 }
