@@ -1,8 +1,8 @@
 const controller = require('./controller')
 const api = require('./api')
 
-exports.api.login = api.login
-exports.api.callback = api.callback
-exports.api.accessToken = api.accessToken
+exports.api_login = api.login
+exports.api_callback = api.callback
+exports.api_accessToken = api.accessToken
 
 exports.getAccessToken = controller.getAccessToken
