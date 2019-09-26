@@ -2,9 +2,10 @@
   "author": "iarigby",
   "name": "spotify-auth-node",
   "description": "simple backend for authorizing and refreshing with spotify",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "querystring": "~0.2.0",
     "request": "~2.83.0"
-  }
+  },
+  "repository": "github.com/iarigby/spotify-auth-node"
 }
