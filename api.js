@@ -46,7 +46,7 @@ exports.callback = function (req, res) {
                 expires_in: body.expires_in,
                 obtained_date: (new Date()).getTime()
             }
-            writeFile(data)
+            controller.setData(data)
             /*
             const options = {
                 url: 'https://api.spotify.com/v1/me',

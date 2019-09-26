@@ -16,7 +16,7 @@ function getData() {
         .then(data => JSON.parse(data))
 }
 
-function setData(data) {
+exports.setData = function(data) {
     return writeFile(fileName, JSON.stringify(data))
         .catch(error => console.log(error))
 }
