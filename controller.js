@@ -16,18 +16,20 @@ function getData() {
         .then(data => JSON.parse(data))
 }
 
-exports.setData = function(data) {
+function setData(data) {
     return writeFile(fileName, JSON.stringify(data))
         .catch(error => console.log(error))
 }
+
+exports.setData = setData
 
 exports.getAccessToken = function () {
     return getData()
         .then(data => {
             if (data.obtained_date + data.expires_in < (new Date()).getTime())
-                return data.access_token
-            else
                 return refreshToken()
+            else
+                return data.access_token
         })
 }
 
@@ -49,7 +51,7 @@ refreshToken = function () {
         request.post(authOptions, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 data.access_token = body.access_token;
-                data.expires_in = body.expires_in;
+                data.expires_in = body.expires_in*1000;
                 data.obtained_date = (new Date()).getTime()
                 // refresh should be done automatically anyways, leaving just in case
                 setData(data)
@@ -58,3 +60,4 @@ refreshToken = function () {
         });
     })
 }
+    
