@@ -3,37 +3,39 @@ const request = require('request'); // "request" library
 const client_id = process.env.CLIENT_ID; // your client id
 const client_secret = process.env.CLIENT_SECRET; // your secret
 
-const fs = require('fs')
 
 const fileName = 'data.json'
 
-function readFile(callback) {
-    fs.readFile(fileName, (err, data) => {
-        if (err) throw err;
-        callback(JSON.parse(data))
-    })
+const fs = require('fs')
+const util = require('util')
+const writeFile = util.promisify(fs.writeFile);
+const readFile = util.promisify(fs.readFile)
+
+function getData() {
+    return readFile(fileName)
+        .then(data => JSON.parse(data))
 }
 
-function writeFile(data) {
-    fs.writeFile(fileName, JSON.stringify(data), err => {
-        if (err) console.log(err)
-    })
+function setData(data) {
+    return writeFile(fileName, JSON.stringify(data))
+        .catch(error => console.log(error))
 }
 
-exports.getAccessToken = function (callback) {
-    readFile(data => {
-        if (data.obtained_date + data.expires_in < (new Date()).getTime())
-            callback(data.access_token)
-        else
-            refreshToken(callback)
-    })
+exports.getAccessToken = function () {
+    return getData()
+        .then(data => {
+            if (data.obtained_date + data.expires_in < (new Date()).getTime())
+                return data.access_token
+            else
+                return refreshToken()
+        })
 }
 
-refreshToken = function (callback) {
+refreshToken = function () {
 
     // requesting access token from refresh token
     // const refresh_token = req.query.refresh_token;
-    readFile(data => {
+    return getData().then(data => {
         const authOptions = {
             url: 'https://accounts.spotify.com/api/token',
             headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
@@ -50,8 +52,8 @@ refreshToken = function (callback) {
                 data.expires_in = body.expires_in;
                 data.obtained_date = (new Date()).getTime()
                 // refresh should be done automatically anyways, leaving just in case
-                callback(data.access_token)
-                writeFile(data)
+                setData(data)
+                return data.access_token
             }
         });
     })

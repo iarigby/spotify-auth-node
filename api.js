@@ -76,10 +76,11 @@ exports.callback = function (req, res) {
 
 
 exports.accessToken = function (req, res) {
-    controller.getAccessToken(data => {
-        res.send({
-            'access_token': data.access_token
+    controller.getAccessToken()
+        .then(data => {
+            res.send({
+                'access_token': data.access_token
+            })
         })
-    })
 }
 
