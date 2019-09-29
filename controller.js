@@ -3,7 +3,7 @@ const request = require('request'); // "request" library
 const client_id = process.env.CLIENT_ID; // your client id
 const client_secret = process.env.CLIENT_SECRET; // your secret
 
-const fileName = 'data.json'
+const fileName = 'auth/data.json'
 
 const fs = require('fs')
 const util = require('util')
