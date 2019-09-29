@@ -9,7 +9,7 @@ const client_secret = process.env.CLIENT_SECRET; // your secret
 exports.login = function (req, res) {
 
     // your application requests authorization
-    const scope = 'user-read-private user-read-email playlist-modify-public';
+    const scope = 'user-read-private user-read-email user-library-read playlist-modify-public';
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
